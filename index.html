@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision Assist - AI-Powered Navigation for the Visually Impaired</title>
+    <meta name="description" content="Vision Assist uses advanced AI and your phone camera to describe your environment and provide real-time audio directions for people with vision disabilities.">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-eye" aria-hidden="true"></i>
+                <span>Vision Assist</span>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active" aria-current="page">Home</a></li>
+                <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+                <li><a href="features.html" class="nav-link">Features</a></li>
+                <li><a href="accessibility.html" class="nav-link">Accessibility</a></li>
+                <li><a href="contact.html" class="nav-link">Download</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" role="banner">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="highlight">Vision Assist</span><br>
+                    Your AI-Powered Navigation Companion
+                </h1>
+                <p class="hero-description">
+                    Experience the world around you with confidence. Vision Assist uses cutting-edge AI technology 
+                    to describe your environment, identify obstacles, and provide real-time audio directions 
+                    through your phone's camera.
+                </p>
+                <div class="hero-buttons">
+                    <a href="contact.html" class="btn btn-primary" role="button">
+                        <i class="fas fa-download" aria-hidden="true"></i>
+                        Download Now
+                    </a>
+                    <a href="how-it-works.html" class="btn btn-secondary" role="button">
+                        <i class="fas fa-play" aria-hidden="true"></i>
+                        Watch Demo
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">50K+</span>
+                        <span class="stat-label">Users Helped</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">99.9%</span>
+                        <span class="stat-label">Accuracy Rate</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Available</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="camera-view">
+                            <div class="ai-overlay">
+                                <div class="detection-box"></div>
+                                <div class="detection-box"></div>
+                                <div class="detection-box"></div>
+                            </div>
+                        </div>
+                        <div class="audio-waves">
+                            <div class="wave"></div>
+                            <div class="wave"></div>
+                            <div class="wave"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section class="features-preview" role="region" aria-labelledby="features-heading">
+        <div class="container">
+            <h2 id="features-heading" class="section-title">Empowering Independence Through Technology</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-camera" aria-hidden="true"></i>
+                    </div>
+                    <h3>Real-Time Vision Analysis</h3>
+                    <p>Advanced computer vision AI continuously analyzes your surroundings through your phone's camera, identifying objects, people, and obstacles.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-volume-up" aria-hidden="true"></i>
+                    </div>
+                    <h3>Audio Descriptions</h3>
+                    <p>Get detailed audio descriptions of your environment, including object locations, distances, and potential navigation paths.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-route" aria-hidden="true"></i>
+                    </div>
+                    <h3>Smart Navigation</h3>
+                    <p>Receive turn-by-turn audio directions and obstacle warnings to navigate safely and confidently in any environment.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-universal-access" aria-hidden="true"></i>
+                    </div>
+                    <h3>Accessibility First</h3>
+                    <p>Designed specifically for users with vision disabilities, with voice commands, haptic feedback, and intuitive audio interfaces.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Preview -->
+    <section class="how-it-works-preview" role="region" aria-labelledby="how-it-works-heading">
+        <div class="container">
+            <div class="content-grid">
+                <div class="content-text">
+                    <h2 id="how-it-works-heading">How Vision Assist Works</h2>
+                    <p class="section-description">
+                        Our advanced AI technology combines computer vision, machine learning, and real-time audio processing 
+                        to create a seamless navigation experience.
+                    </p>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Camera Activation</h3>
+                                <p>Simply point your phone camera in the direction you want to explore.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>AI Analysis</h3>
+                                <p>Our AI instantly processes the visual data to identify objects, obstacles, and safe paths.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Audio Feedback</h3>
+                                <p>Receive clear, descriptive audio guidance about your environment and navigation options.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="how-it-works.html" class="btn btn-outline">Learn More About Our Technology</a>
+                </div>
+                <div class="content-visual">
+                    <div class="tech-demo">
+                        <div class="ai-brain">
+                            <i class="fas fa-brain" aria-hidden="true"></i>
+                        </div>
+                        <div class="data-flow">
+                            <div class="flow-item">Camera Input</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-item">AI Processing</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-item">Audio Output</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" role="region" aria-labelledby="testimonials-heading">
+        <div class="container">
+            <h2 id="testimonials-heading" class="section-title">What Our Users Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"Vision Assist has given me the confidence to navigate new places independently. The audio descriptions are incredibly detailed and accurate."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Sarah Chen</h4>
+                            <span>Vision Assist User</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"The real-time obstacle detection has prevented countless accidents. It's like having a personal guide with me at all times."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Michael Rodriguez</h4>
+                            <span>Vision Assist User</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"As someone who lost their sight later in life, Vision Assist has been a game-changer for maintaining my independence."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Dr. Emily Watson</h4>
+                            <span>Vision Assist User</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" role="region" aria-labelledby="cta-heading">
+        <div class="container">
+            <div class="cta-content">
+                <h2 id="cta-heading">Ready to Experience the World Differently?</h2>
+                <p>Download Vision Assist today and discover a new way to navigate your world with confidence and independence.</p>
+                <div class="cta-buttons">
+                    <a href="contact.html" class="btn btn-primary btn-large">
+                        <i class="fas fa-download" aria-hidden="true"></i>
+                        Download for Free
+                    </a>
+                    <a href="accessibility.html" class="btn btn-secondary btn-large">
+                        <i class="fas fa-info-circle" aria-hidden="true"></i>
+                        Learn About Accessibility
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-eye" aria-hidden="true"></i>
+                        <span>Vision Assist</span>
+                    </div>
+                    <p>Empowering independence through AI-powered navigation technology.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <ul>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="contact.html">Download</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="accessibility.html">Accessibility</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Vision Assist. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
