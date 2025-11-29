@@ -5,7 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
-  Switch
+  Switch,
+  Alert
 } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { StatusBar } from 'expo-status-bar';
@@ -30,9 +31,17 @@ export default function EnhancedCameraScreen() {
   const [mode, setMode] = useState(MODES.COMPREHENSIVE);
   const [lowLightMode, setLowLightMode] = useState(false);
   const [autoSaveEnabled, setAutoSaveEnabled] = useState(true);
+  const [errorCount, setErrorCount] = useState(0);
+  const [serviceHealth, setServiceHealth] = useState({
+    camera: true,
+    obstacleDetection: true,
+    emotionDetection: true,
+    gallery: true
+  });
 
   const cameraRef = useRef(null);
   const analysisInterval = useRef(null);
+  const consecutiveErrors = useRef(0);
 
   useEffect(() => {
     initializeServices();
@@ -53,16 +62,41 @@ export default function EnhancedCameraScreen() {
   }, [isActive, mode, lowLightMode]);
 
   async function initializeServices() {
+    const healthStatus = {
+      camera: true,
+      obstacleDetection: true,
+      emotionDetection: true,
+      gallery: true
+    };
+
     try {
       await galleryManager.initialize();
-      await watchConnectivity.initialize();
+    } catch (error) {
+      console.error('Gallery manager init error:', error);
+      healthStatus.gallery = false;
+      audioService.speak('Gallery auto-save unavailable');
+    }
 
+    try {
+      await watchConnectivity.initialize();
+    } catch (error) {
+      console.error('Watch connectivity init error:', error);
+    }
+
+    try {
       obstacleDetection.setLowLightMode(lowLightMode);
       obstacleDetection.setPriorityMode(mode === MODES.PRIORITY);
-
-      audioService.speak('Enhanced Vision Assist. Tap to start.');
     } catch (error) {
-      console.error('Service init error:', error);
+      console.error('Obstacle detection init error:', error);
+      healthStatus.obstacleDetection = false;
+    }
+
+    setServiceHealth(healthStatus);
+
+    if (healthStatus.obstacleDetection && healthStatus.emotionDetection) {
+      audioService.speak('Enhanced Vision Assist ready. Tap to start.');
+    } else {
+      audioService.speak('Vision Assist ready with limited features.');
     }
   }
 
@@ -108,18 +142,57 @@ export default function EnhancedCameraScreen() {
         await analyzeObstacles(photo.base64);
       }
 
-      if (autoSaveEnabled && mode === MODES.COMPREHENSIVE) {
+      if (autoSaveEnabled && mode === MODES.COMPREHENSIVE && serviceHealth.gallery) {
         await attemptAutoSave(photo.uri, photo.base64);
       }
 
+      consecutiveErrors.current = 0;
+
     } catch (error) {
+      consecutiveErrors.current++;
       console.error('Analysis error:', error);
+
+      if (consecutiveErrors.current >= 3) {
+        handleCriticalError(error);
+      }
+
     } finally {
       setIsAnalyzing(false);
     }
   }
 
+  function handleCriticalError(error) {
+    setIsActive(false);
+    stopContinuousAnalysis();
+
+    setServiceHealth(prev => ({
+      ...prev,
+      camera: false
+    }));
+
+    Alert.alert(
+      'Camera Error',
+      'Vision analysis is experiencing issues. Please restart the camera or check permissions.',
+      [
+        { text: 'Retry', onPress: retryServices },
+        { text: 'Stop', style: 'cancel' }
+      ]
+    );
+
+    audioService.speak('Camera error. Analysis stopped.');
+  }
+
+  async function retryServices() {
+    consecutiveErrors.current = 0;
+    setErrorCount(0);
+    await initializeServices();
+  }
+
   async function analyzeObstacles(imageBase64) {
+    if (!serviceHealth.obstacleDetection) {
+      return;
+    }
+
     try {
       const obstacles = await obstacleDetection.detectObstacles(imageBase64, {
         lowLight: lowLightMode,
@@ -138,10 +211,20 @@ export default function EnhancedCameraScreen() {
 
     } catch (error) {
       console.error('Obstacle analysis error:', error);
+      setServiceHealth(prev => ({ ...prev, obstacleDetection: false }));
+      audioService.speak('Obstacle detection temporarily unavailable');
+
+      setTimeout(() => {
+        setServiceHealth(prev => ({ ...prev, obstacleDetection: true }));
+      }, 10000);
     }
   }
 
   async function analyzeEmotion(imageBase64) {
+    if (!serviceHealth.emotionDetection) {
+      return;
+    }
+
     try {
       const emotion = await emotionDetection.detectEmotion(imageBase64);
 
@@ -154,6 +237,12 @@ export default function EnhancedCameraScreen() {
 
     } catch (error) {
       console.error('Emotion analysis error:', error);
+      setServiceHealth(prev => ({ ...prev, emotionDetection: false }));
+      audioService.speak('Emotion detection temporarily unavailable');
+
+      setTimeout(() => {
+        setServiceHealth(prev => ({ ...prev, emotionDetection: true }));
+      }, 10000);
     }
   }
 

@@ -8,7 +8,8 @@ import {
   TextInput,
   ActivityIndicator,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  Alert
 } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { StatusBar } from 'expo-status-bar';
@@ -21,9 +22,12 @@ export default function ConversationalScreen() {
   const [question, setQuestion] = useState('');
   const [conversation, setConversation] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [errorState, setErrorState] = useState(null);
+  const [retryCount, setRetryCount] = useState(0);
 
   const cameraRef = useRef(null);
   const scrollRef = useRef(null);
+  const lastQuestion = useRef(null);
 
   const quickQuestions = [
     'Do you see a car nearby?',
@@ -43,6 +47,7 @@ export default function ConversationalScreen() {
 
     try {
       setIsProcessing(true);
+      setErrorState(null);
       audioService.speak('Capturing scene');
 
       const photo = await cameraRef.current.takePictureAsync({
@@ -55,24 +60,46 @@ export default function ConversationalScreen() {
 
       setSessionActive(true);
       setConversation([]);
+      setRetryCount(0);
       audioService.speak('Session started. Ask me anything about this scene.');
 
     } catch (error) {
       console.error('Session start error:', error);
-      audioService.speak('Failed to start session');
+      setErrorState('camera_capture_failed');
+
+      Alert.alert(
+        'Camera Error',
+        'Failed to capture scene. Please check camera permissions and try again.',
+        [
+          { text: 'Retry', onPress: startSession },
+          { text: 'Cancel', style: 'cancel' }
+        ]
+      );
+
+      audioService.speak('Failed to start session. Check camera permissions.');
     } finally {
       setIsProcessing(false);
     }
   }
 
-  async function askQuestion(questionText) {
+  async function askQuestion(questionText, isRetry = false) {
     if (!sessionActive || isProcessing) return;
 
     try {
       setIsProcessing(true);
-      audioService.speak('Processing question');
+      setErrorState(null);
+      lastQuestion.current = questionText;
 
-      const result = await conversationalAI.ask(questionText);
+      if (!isRetry) {
+        audioService.speak('Processing question');
+      }
+
+      const result = await Promise.race([
+        conversationalAI.ask(questionText),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Request timeout')), 30000)
+        )
+      ]);
 
       const newConversation = [
         ...conversation,
@@ -90,6 +117,7 @@ export default function ConversationalScreen() {
 
       setConversation(newConversation);
       setQuestion('');
+      setRetryCount(0);
 
       audioService.speak(result.answer);
 
@@ -99,7 +127,39 @@ export default function ConversationalScreen() {
 
     } catch (error) {
       console.error('Question error:', error);
-      audioService.speak('Failed to process question');
+
+      const isNetworkError = error.message?.includes('network') ||
+                            error.message?.includes('timeout') ||
+                            error.message?.includes('fetch');
+
+      if (isNetworkError && retryCount < 2) {
+        setRetryCount(prev => prev + 1);
+
+        Alert.alert(
+          'Connection Issue',
+          'Failed to process your question. Would you like to retry?',
+          [
+            { text: 'Retry', onPress: () => askQuestion(questionText, true) },
+            { text: 'Cancel', style: 'cancel' }
+          ]
+        );
+
+        audioService.speak('Network error. Tap retry to try again.');
+      } else {
+        setErrorState('api_failed');
+        setRetryCount(0);
+
+        Alert.alert(
+          'Processing Failed',
+          'Unable to process your question. Please try again or restart the session.',
+          [
+            { text: 'OK', style: 'default' }
+          ]
+        );
+
+        audioService.speak('Failed to process question. Please try again.');
+      }
+
     } finally {
       setIsProcessing(false);
     }
