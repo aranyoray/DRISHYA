@@ -7,6 +7,8 @@ import HomeScreen from '../screens/HomeScreen';
 import EnhancedCameraScreen from '../screens/EnhancedCameraScreen';
 import ConversationalScreen from '../screens/ConversationalScreen';
 import EmotionAnalyticsScreen from '../screens/EmotionAnalyticsScreen';
+import HardwareConnectionScreen from '../screens/HardwareConnectionScreen';
+import ClinicalTrialScreen from '../screens/ClinicalTrialScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const Stack = createNativeStackNavigator();
@@ -79,6 +81,8 @@ export default function AppNavigator() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Main" component={TabNavigator} />
+        <Stack.Screen name="Hardware" component={HardwareConnectionScreen} />
+        <Stack.Screen name="ClinicalTrial" component={ClinicalTrialScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

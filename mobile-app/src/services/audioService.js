@@ -225,6 +225,44 @@ class AudioService {
       return [];
     }
   }
+
+  async playDistanceBeep(distance) {
+    try {
+      let beepPattern;
+
+      if (distance < 0.5) {
+        beepPattern = { interval: 100, duration: 50, frequency: 1000 };
+      } else if (distance < 1.0) {
+        beepPattern = { interval: 250, duration: 100, frequency: 800 };
+      } else if (distance < 2.0) {
+        beepPattern = { interval: 500, duration: 100, frequency: 600 };
+      } else {
+        beepPattern = { interval: 1000, duration: 100, frequency: 400 };
+      }
+
+      console.log('[AudioService] Distance beep:', distance, beepPattern);
+
+      await this.hapticWarning(distance);
+
+    } catch (error) {
+      console.error('Distance beep error:', error);
+    }
+  }
+
+  setBoneConductionMode(enabled) {
+    this.boneConductionMode = enabled;
+    console.log('[AudioService] Bone conduction mode:', enabled);
+  }
+
+  async setAudioOutput(outputType) {
+    try {
+      console.log('[AudioService] Setting audio output:', outputType);
+      return { success: true };
+    } catch (error) {
+      console.error('Audio output error:', error);
+      return { success: false };
+    }
+  }
 }
 
 export default new AudioService();
