@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "DRISHYA",
+    "name": "DRISHYA Vision Assist",
     "slug": "drishya-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "description": "AI-powered vision assist application for visually impaired users with real-time scene description, obstacle detection, and navigation guidance",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -16,17 +17,48 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.drishya.mobile"
+      "bundleIdentifier": "com.drishya.mobile",
+      "infoPlist": {
+        "NSCameraUsageDescription": "DRISHYA needs camera access to provide real-time visual descriptions and obstacle detection for visually impaired users.",
+        "NSMicrophoneUsageDescription": "DRISHYA may use the microphone for voice commands.",
+        "NSLocationWhenInUseUsageDescription": "DRISHYA uses your location to provide navigation assistance and contextual information.",
+        "UIBackgroundModes": ["location", "audio"],
+        "UIRequiredDeviceCapabilities": ["armv7", "arm64"]
+      },
+      "supportsVoiceOver": true,
+      "accessibilityFeatures": ["VoiceOver", "LargeText", "ReduceMotion"]
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.drishya.mobile"
+      "package": "com.drishya.mobile",
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "VIBRATE"
+      ],
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "DRISHYA needs camera access to provide real-time visual descriptions and obstacle detection."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "DRISHYA uses your location to provide navigation assistance and contextual information."
+        }
+      ]
+    ]
   }
 }
