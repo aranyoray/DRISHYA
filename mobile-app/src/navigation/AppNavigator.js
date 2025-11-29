@@ -3,9 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-// Screens
 import HomeScreen from '../screens/HomeScreen';
-import CameraScreen from '../screens/CameraScreen';
+import EnhancedCameraScreen from '../screens/EnhancedCameraScreen';
+import ConversationalScreen from '../screens/ConversationalScreen';
+import EmotionAnalyticsScreen from '../screens/EmotionAnalyticsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const Stack = createNativeStackNavigator();
@@ -22,7 +23,7 @@ function TabNavigator() {
           paddingTop: 10,
         },
         tabBarLabelStyle: {
-          fontSize: 16,
+          fontSize: 14,
           fontWeight: '600',
         },
         tabBarActiveTintColor: '#007AFF',
@@ -39,10 +40,26 @@ function TabNavigator() {
       />
       <Tab.Screen
         name="Vision"
-        component={CameraScreen}
+        component={EnhancedCameraScreen}
         options={{
-          tabBarLabel: 'Vision Assist',
+          tabBarLabel: 'Vision',
           tabBarAccessibilityLabel: 'Vision Assist camera tab',
+        }}
+      />
+      <Tab.Screen
+        name="Chat"
+        component={ConversationalScreen}
+        options={{
+          tabBarLabel: 'Ask AI',
+          tabBarAccessibilityLabel: 'Conversational AI tab',
+        }}
+      />
+      <Tab.Screen
+        name="Emotions"
+        component={EmotionAnalyticsScreen}
+        options={{
+          tabBarLabel: 'Emotions',
+          tabBarAccessibilityLabel: 'Emotion analytics tab',
         }}
       />
       <Tab.Screen

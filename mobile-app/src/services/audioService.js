@@ -198,6 +198,22 @@ class AudioService {
   }
 
   /**
+   * Custom haptic pattern for morse code and complex feedback
+   */
+  async hapticCustomPattern(pattern) {
+    try {
+      for (let i = 0; i < pattern.length; i++) {
+        if (i % 2 === 1) {
+          await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        }
+        await new Promise(resolve => setTimeout(resolve, pattern[i]));
+      }
+    } catch (error) {
+      console.error('Haptic custom pattern error:', error);
+    }
+  }
+
+  /**
    * Get available voices
    */
   async getAvailableVoices() {

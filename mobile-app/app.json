@@ -22,6 +22,8 @@
         "NSCameraUsageDescription": "DRISHYA needs camera access to provide real-time visual descriptions and obstacle detection for visually impaired users.",
         "NSMicrophoneUsageDescription": "DRISHYA may use the microphone for voice commands.",
         "NSLocationWhenInUseUsageDescription": "DRISHYA uses your location to provide navigation assistance and contextual information.",
+        "NSPhotoLibraryUsageDescription": "DRISHYA saves beautiful and interesting scenes automatically to your photo library.",
+        "NSPhotoLibraryAddUsageDescription": "DRISHYA saves beautiful and interesting scenes automatically to your photo library.",
         "UIBackgroundModes": ["location", "audio"],
         "UIRequiredDeviceCapabilities": ["armv7", "arm64"]
       },
@@ -39,7 +41,10 @@
         "RECORD_AUDIO",
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
-        "VIBRATE"
+        "VIBRATE",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_MEDIA_IMAGES"
       ],
       "versionCode": 1
     },
